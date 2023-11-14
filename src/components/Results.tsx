@@ -1,36 +1,39 @@
-import Score from "./Score";
-import LeftTeam from "./LeftTeam";
-import RightTeam from "./RightTeam";
-import Stat from "./Stat";
-import Attack from "./Attack";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import createStats from "../functions/createStats";
+import Score from "./Score"
+import LeftTeam from "./LeftTeam"
+import RightTeam from "./RightTeam"
+import Stat from "./Stat"
+import Attack from "./Attack"
+import axios from "axios"
 
-function Results(): JSX.Element {
-  const [stats, setStats] = useState();
-  const [score, setScore] = useState();
+import { useEffect, useState } from "react"
+import { Match } from "../types/typesMatch"
+import { MatchStats, AllStats } from "../types/typesStats"
+import generateStats from "../functions/generateStats"
+
+const Results = (): JSX.Element | undefined => {
+  const [stats, setStats] = useState<any>()
+  const [score, setScore] = useState<Match["score"]>()
 
   useEffect((): void => {
     const fetchData = async (): Promise<void> => {
       try {
         const [getStats, getMatch] = await Promise.all([
-          axios.get(`${import.meta.env.VITE_BACK_URL}/stats`),
-          axios.get(`${import.meta.env.VITE_BACK_URL}/match`),
-        ]);
-        const allStats = {
+          axios.get<MatchStats>(`${import.meta.env.VITE_BACK_URL}/stats`),
+          axios.get<Match>(`${import.meta.env.VITE_BACK_URL}/match`),
+        ])
+        const allStats: AllStats = {
           leftTeam: getStats.data.leftTeam,
           rightTeam: getStats.data.rightTeam,
-        };
-        setStats(createStats(allStats));
-        setScore(getMatch.data.score);
+        }
+        setStats(generateStats(allStats))
+        setScore(getMatch.data.score)
       } catch (error) {
-        console.log("Error fetching data:", error);
+        console.log("Error fetching data:", error)
       }
-    };
+    }
 
-    fetchData();
-  }, []);
+    fetchData()
+  }, [])
   return (
     stats && (
       <div className="mx-4 md:mx-0">
@@ -41,17 +44,17 @@ function Results(): JSX.Element {
         </div>
         <div className="mt-5 mx-5 md:mx-0 md:flex md:justify-between md:px-6 md:gap-20 flex-col-2 flex-row-reverse">
           <div className="hidden md:block w-full">
-            <Attack stats={stats} />
+            {/* <Attack stats={stats} /> */}
           </div>
           <div className="w-full">
-            {stats.statsArr.map((stat, i) => (
+            {/* {stats.statsArr.map((stat, i) => (
               <Stat key={i} stat={stat} />
-            ))}
+            ))} */}
           </div>
         </div>
       </div>
     )
-  );
+  )
 }
 
-export default Results;
+export default Results

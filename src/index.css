@@ -12,7 +12,11 @@ a,
 p,
 thead {
   font-family: "SpaceGrotesk";
+  color: white;
 }
 .font-condstd-bold {
   font-family: "CondStd-Bold";
+}
+html {
+  background-color: black;
 }

@@ -1,7 +1,7 @@
-import Results from "../components/Results";
-import "../assets/styles/stats.css";
-function Stats(): JSX.Element {
-  return <Results />;
+import Results from "../components/Results"
+import "../styles/stats.css"
+const Stats = (): JSX.Element => {
+  return <Results />
 }
 
-export default Stats;
+export default Stats

@@ -1,23 +1,24 @@
-import { useEffect, useState } from "react";
-import LineupHeader from "../components/LineupHeader";
-import LineupList from "../components/LineupList";
-import axios from "axios";
+import { useEffect, useState } from "react"
+import LineupHeader from "../components/LineupHeader"
+import LineupList from "../components/LineupList"
+import axios from "axios"
+
 function Lineup(): JSX.Element {
-  const [match, setMatch] = useState();
+  const [match, setMatch] = useState()
   useEffect((): void => {
     const fetchData = async (): Promise<void> => {
       try {
         const getMatch = await Promise.all([
           axios.get(`${import.meta.env.VITE_BACK_URL}/match`),
-        ]);
-        setMatch(getMatch[0].data);
+        ])
+        setMatch(getMatch[0].data)
       } catch (error) {
-        console.log("Error fetching data:", error);
+        console.log("Error fetching data:", error)
       }
-    };
+    }
 
-    fetchData();
-  }, []);
+    fetchData()
+  }, [])
 
   return (
     match && (
@@ -32,7 +33,7 @@ function Lineup(): JSX.Element {
         </div>
       </div>
     )
-  );
+  )
 }
 
-export default Lineup;
+export default Lineup
